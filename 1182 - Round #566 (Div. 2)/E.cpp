@@ -153,6 +153,26 @@ set<ll> getKnownPrimes(ll f[4], ll c) {
   return knownPrimes;
 }
 
+map<ll, ll> getFnPrimeCount(
+	set<ll> &knownPrimes, Matrix &totalLogPropagate, ll f[4], ll c
+	) {
+  map<ll, ll> fnPrimeCount;
+  for (ll p : knownPrimes) {
+    Matrix initPrimeCount(3, 1);
+    FOR(i, 1, 4) {
+      for (ll num = f[i]; num % p == 0; num /= p) {
+        initPrimeCount.num[3-i][0]++;     // f[n]
+      }
+      for (ll num = c; num % p == 0; num /= p) {
+        initPrimeCount.num[3-i][0] += i;  // c^n
+      }
+      Matrix lastPrimeCount = totalLogPropagate * initPrimeCount;
+      fnPrimeCount[p] = lastPrimeCount.num[0][0];
+    }
+  }
+  return fnPrimeCount;
+}
+
 // Main fucntion
 int main() {
   testMatrix();
@@ -179,6 +199,13 @@ int main() {
   Matrix totalLogPropagate = baseLogPropagate ^ (n - 3);
   
   set<ll> knownPrimes = getKnownPrimes(f, c);
+  
+  // Calculate c^n * f[n]'s prime count: initPrimeCount[x]: f[3-x]'s p-occurence
+  map<ll, ll> fnPrimeCount = getFnPrimeCount(
+  	knownPrimes, totalLogPropagate, f, c);
+  	
+  
+
   
   return 0;
 }
