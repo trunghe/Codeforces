@@ -134,6 +134,25 @@ void testMatrix() {
   //      -1 0
 }
 
+set<ll> getKnownPrimes(ll f[4], ll c) {
+  // Calculate target primes
+  set<ll> knownPrimes;
+  FOR(i, 1, 4) {
+    for (ll p : primeDecomposition(f[i])) {
+      knownPrimes.insert(p);
+    }
+  }
+  for (ll p : primeDecomposition(c)) {
+    knownPrimes.insert(p);
+  }
+  printf("Known primes: ");
+  for (ll p : knownPrimes) {
+    printf("%lld, ", p);
+  }
+  printf("\n");
+  return knownPrimes;
+}
+
 // Main fucntion
 int main() {
   testMatrix();
@@ -159,7 +178,7 @@ int main() {
                            {0, 1, 0}});
   Matrix totalLogPropagate = baseLogPropagate ^ (n - 3);
   
-  
+  set<ll> knownPrimes = getKnownPrimes(f, c);
   
   return 0;
 }
