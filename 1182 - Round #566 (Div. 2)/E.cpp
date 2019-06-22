@@ -128,6 +128,7 @@ void testMatrix() {
              {-1, 0}});
   Matrix b = a1 * a2;
   printf("a1*a2 = \n");
+  printMatrix(b);
   // Expect:
   //    a1*a2 = 
   //      1 2
@@ -145,11 +146,11 @@ set<ll> getKnownPrimes(ll f[4], ll c) {
   for (ll p : primeDecomposition(c)) {
     knownPrimes.insert(p);
   }
-  printf("Known primes: ");
-  for (ll p : knownPrimes) {
-    printf("%lld, ", p);
-  }
-  printf("\n");
+//   printf("Known primes: ");
+//   for (ll p : knownPrimes) {
+//     printf("%lld, ", p);
+//   }
+//   printf("\n");
   return knownPrimes;
 }
 
@@ -175,7 +176,8 @@ map<ll, ll> getFnPrimeCount(
 
 // Main fucntion
 int main() {
-  testMatrix();
+//   testMatrix();
+
   sieve();
  
   // Get input and init params
@@ -204,8 +206,14 @@ int main() {
   map<ll, ll> fnPrimeCount = getFnPrimeCount(
   	knownPrimes, totalLogPropagate, f, c);
   	
-  
-
+  // Calculate answer = product(p^fnPrimeCount[p]) & c^(-n)
+  ll answer = 1;
+  for (auto pinfo : fnPrimeCount) {
+//   	printf("%lld-occurence = %lld\n", pinfo.first, pinfo.second);
+	(answer *= modPow(pinfo.first, pinfo.second)) %= R;
+  }
+  (answer *= modPow(modPow(c, R-2), n)) %= R;
+  printf("%lld\n", answer);
   
   return 0;
 }
