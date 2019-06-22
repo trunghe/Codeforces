@@ -99,9 +99,7 @@ ll modPow(ll a, ll x) {
   return res;
 }
 
-// Main fucntion
-int main() {
-  
+void testMatrix() {
   // Matrix functionality testing
   Matrix a1({{1, 2}, 
              {0, 1}});
@@ -111,6 +109,17 @@ int main() {
   printf("a1*a2 = \n  %lld %lld\n  %lld %lld\n",
          b.num[0][0], b.num[0][1],
          b.num[1][0], b.num[1][1]);
+  // Expect:
+  //    a1*a2 = 
+  //      1 2
+  //      -1 0
+}
+
+// Main fucntion
+int main() {
+  testMatrix();
+  
+  
   
   return 0;
 }
