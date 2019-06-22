@@ -36,7 +36,7 @@ public:
     }
     Matrix res(this->row, other.col);
     FOR(r, 0, res.row) FOR(c, 0, res.col) {
-      FOR(k, 0, this.col) {
+      FOR(k, 0, this->col) {
         (res.num[r][c] += this->num[r][k] * other.num[k][c]) %= MATRIX_REMAINDER;
       }
     }
@@ -59,7 +59,7 @@ public:
     }
     return res;
   }
-}
+};
 
 // Prime related
 const int limit = 1 << 20;
